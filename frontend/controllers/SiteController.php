@@ -74,47 +74,47 @@ class SiteController extends Controller
         ];
     }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function beforeAction($action)
-	{
-		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-		$this->enableCsrfValidation = false;
+    /**
+     * @inheritdoc
+     */
+    public function beforeAction($action)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $this->enableCsrfValidation = false;
 
-		return parent::beforeAction($action);
-	}
+        return parent::beforeAction($action);
+    }
 
-	/**
-	* Комментирование заявки
-	*/
-	public function actionPutRequests()
-	{
-		return ['result' => !!\Yii::$app->queueComments->push(new CommentRequestJob([
-			'id' => Yii::$app->request->getQueryParam('id')
-			, 'comment' => Yii::$app->request->getBodyParam('comment'),
-		])),];
-	}
+    /**
+    * Комментирование заявки
+    */
+    public function actionPutRequests()
+    {
+        return ['result' => !!\Yii::$app->queueComments->push(new CommentRequestJob([
+            'id' => Yii::$app->request->getQueryParam('id')
+            , 'comment' => Yii::$app->request->getBodyParam('comment'),
+        ])),];
+    }
 
-	/**
-	* Получение некомментированных заявок
-	*/
-	public function actionGetRequests()
-	{
-		return RequestModel::getActive();
-	}
+    /**
+    * Получение некомментированных заявок
+    */
+    public function actionGetRequests()
+    {
+        return RequestModel::getActive();
+    }
 
-	/**
-	* Создание заявки
-	*/
-	public function actionPostRequests()
-	{
-		$data = Yii::$app->request->post();
+    /**
+    * Создание заявки
+    */
+    public function actionPostRequests()
+    {
+        $data = Yii::$app->request->post();
 
-		return ['result' => !!\Yii::$app->queueRequests->push(new CreateRequestJob([
-			'name' => $data['name']
-			, 'email' => $data['email']
-			, 'message' => $data['message'],
-		])),];
-	}
+        return ['result' => !!\Yii::$app->queueRequests->push(new CreateRequestJob([
+            'name' => $data['name']
+            , 'email' => $data['email']
+            , 'message' => $data['message'],
+        ])),];
+    }
 }

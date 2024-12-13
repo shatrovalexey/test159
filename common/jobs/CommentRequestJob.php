@@ -10,24 +10,24 @@ use common\models\Request as RequestModel;
 */
 class CommentRequestJob extends BaseObject implements JobInterface
 {
-	public $id;
-	public $comment;
+    public $id;
+    public $comment;
     
     public function execute($queue)
     {
-		try {
-			$obj = RequestModel::setResolved($this->id, $this->comment);
-		} catch(\Exception $exception) {
-			return false;
-		}
+        try {
+            $obj = RequestModel::setResolved($this->id, $this->comment);
+        } catch(\Exception $exception) {
+            return false;
+        }
 
-		// Можно было бы создать такую же очередь
-		Yii::$app->mailer->compose()
-			->setTo($obj->email)
-			->setSubject("Ответ на запрос {$obj->id}")
-			->setTextBody($obj->comment)
-			->send();
+        // Можно было бы создать такую же очередь
+        Yii::$app->mailer->compose()
+            ->setTo($obj->email)
+            ->setSubject("Ответ на запрос {$obj->id}")
+            ->setTextBody($obj->comment)
+            ->send();
 
-		return true;
+        return true;
     }
 }
