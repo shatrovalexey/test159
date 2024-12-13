@@ -4,6 +4,7 @@
 ### НАСТРОЙКА
 * настроить подключения к СУБД и к RabbitMQ
 * `init`
+* `composer install`
 * `yii migrate`
 
 ### ЗАПУСК
