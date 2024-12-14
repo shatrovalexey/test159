@@ -64,7 +64,8 @@ class Request extends ActiveRecord
             ['status', 'default', 'value' =>  self::STATUS_ACTIVE,]
             , ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_RESOLVED,]]
             , [['name', 'email', 'message', 'status',], 'required',]
-            , [['name', 'email', 'message', 'comment',], 'string',],
+            , [['name', 'message', 'comment',], 'string',],
+            , [['email',], 'email',],
         ];
     }
 
