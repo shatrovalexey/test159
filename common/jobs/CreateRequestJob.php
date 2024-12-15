@@ -10,9 +10,20 @@ use common\models\Request as RequestModel;
 */
 class CreateRequestJob extends BaseObject implements JobInterface
 {
-    public $name;
-    public $email;
-    public $message;
+    /**
+    * @var string $name - имя вопрошающего
+    */
+    public string $name;
+
+    /**
+    * @var string $email - e-mail для отправки
+    */
+    public string $email;
+
+    /**
+    * @var string $comment - комментарий
+    */
+    public string $message;
     
     public function execute($queue)
     {

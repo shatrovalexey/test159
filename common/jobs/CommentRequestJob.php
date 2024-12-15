@@ -2,6 +2,7 @@
 namespace common\jobs;
 
 use \yii\queue\JobInterface;
+use common\jobs\CommentRequestEmailJob;
 use \yii\base\BaseObject;
 use common\models\Request as RequestModel;
 
@@ -10,7 +11,14 @@ use common\models\Request as RequestModel;
 */
 class CommentRequestJob extends BaseObject implements JobInterface
 {
+    /**
+    * @var int $id - ID заявки
+    */
     public $id;
+
+    /**
+    * @var string $comment - комментарий
+    */
     public $comment;
     
     public function execute($queue)
@@ -21,12 +29,11 @@ class CommentRequestJob extends BaseObject implements JobInterface
             return false;
         }
 
-        // Можно было бы создать такую же очередь
-        Yii::$app->mailer->compose()
-            ->setTo($obj->email)
-            ->setSubject("Ответ на запрос {$obj->id}")
-            ->setTextBody($obj->comment)
-            ->send();
+        \Yii::$app->queueCommentsEmail->push(new CommentRequestEmailJob([
+            'email' => $obj->email
+            , 'id' => $obj->id
+            , 'comment' => $obj->comment,
+        ]));
 
         return true;
     }
