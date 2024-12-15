@@ -9,7 +9,9 @@
 
 ### ЗАПУСК
 * `yii serve --docroot frontend\web`
-* `yii queue/listen --verbose`
+* `yii queue-requests/listen --verbose`
+* `yii queue-comments/listen --verbose`
+* `yii queue-comments-email/listen --verbose`
 
 ### ТЕСТИРОВАНИЕ
 * Postman: "https://local8-5977.postman.co/workspace/Local-Workspace~24bf8700-ad76-494d-8236-636eeeb9a5e4/folder/40039781-1dca53fe-f190-44d8-b0e9-aa1e683c16f0?action=share&source=copy-link&creator=40039781&ctx=documentation"
